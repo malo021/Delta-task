@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricochet Rumble</title>
+    <style>
+        @font-face {
+            font-family: 'FFF Forward';
+            src: url("C:/Users/aravi/Downloads/font2.ttf") format('truetype');
+        }
+        body {
+            background-color: black;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: bold;
+        }
+        .box {
+            height: 70px;
+            width: 70px;
+            background-color: aqua;
+            margin: 2px;
+            border-style: solid;
+            border-color: black;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+        }
+        h1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: hotpink;
+            padding-top: 50px;
+            font-size: 2.8rem;
+        }
+        #playbutton {
+            position: absolute;
+            left: 10%;
+            top: 30%;
+            height: 50px;
+            width: 100px;
+            border-radius: 10px;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: bold;
+            background-color: rgb(22, 70, 160);
+            border-style: solid;
+            border-color: cyan;
+            color: hotpink;
+            font-size: 1.2rem;
+        }
+        #quitbutton {
+            position: absolute;
+            left: 10%;
+            top: 60%;
+            height: 50px;
+            width: 100px;
+            border-radius: 10px;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: bold;
+            background-color: rgb(22, 70, 160);
+            border-style: solid;
+            border-color: cyan;
+            color: hotpink;
+            font-size: 1.2rem;
+        }
+        #timer {
+            position: absolute;
+            left: 80%;
+            top: 45%;
+            font-size: 2.5rem;
+            color: hotpink;
+        }
+        #redsemirichochet {
+            position: relative;
+            top: 5px;
+            left: 5px;
+            width: 0;
+            height: 0;
+            border-right: 65px solid transparent;
+            border-bottom: 60px solid red;
+        }
+        #redricochet {
+            position: relative;
+            top: 35px;
+            width: 70px;
+            height: 3px;
+            border-radius: 10px;
+            background-color: red;
+            transform: rotate(45deg);
+        }
+        #redtitan {
+            width: 70px;
+            height: 70px;
+            background-color: red;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        #redcanon {
+            width: 70px;
+            height: 70px;
+            background-color: grey;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: red;
+        }
+        #redtank {
+            width: 70px;
+            height: 70px;
+            background-color: rgb(18, 66, 28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: red;
+        }
+        #bluesemirichochet {
+            position: relative;
+            top: 5px;
+            left: 5px;
+            width: 0;
+            height: 0;
+            border-right: 65px solid transparent;
+            border-bottom: 60px solid blue;
+        }
+        #bluericochet {
+            position: relative;
+            top: 35px;
+            width: 70px;
+            height: 3px;
+            border-radius: 10px;
+            background-color: blue;
+            transform: rotate(45deg);
+        }
+        #bluetitan {
+            width: 70px;
+            height: 70px;
+            background-color: blue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        #bluecanon {
+            width: 70px;
+            height: 70px;
+            background-color: grey;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: blue;
+        }
+        #bluetank {
+            width: 70px;
+            height: 70px;
+            background-color: rgb(18, 66, 28);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(8, 98, 182);
+        }
+        .legalsquare {
+            background-color: rgb(11, 230, 11);
+        }
+        .bulletred {
+            width: 10px;
+            height: 10px;  
+            background-color: grey;
+            border-radius: 5px;
+            position: absolute;
+            left: 47.5%;
+            top:30%;   
+             
+        }
+        .bulletblue {
+            width: 10px;
+            height: 10px;  
+            background-color: grey;
+            border-radius: 5px;
+            position: absolute;
+            left: 47.5%;
+            top:87%;   
+             
+        }
+        #gameover {
+            display:none;
+            color:hotpink;
+            position: absolute;
+            left:45%;
+            top:90%;
+            font-size:2.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h2 id="gameover">GAME OVER</h2>
+    <h2 id="timer">00:00:00</h2>
+    <button id="playbutton">PLAY</button>
+    <button id="quitbutton">QUIT</button>
+    <h1>RICOCHET RUMBLE</h1>
+    <div class="container">
+        <div class="column">
+            <div class="box" data-x="0" data-y="0"></div>
+            <div class="box" data-x="0" data-y="1"></div>
+            <div class="box" data-x="0" data-y="2"></div>
+            <div class="box" data-x="0" data-y="3"></div>
+            <div class="box" data-x="0" data-y="4"></div>
+            <div class="box" data-x="0" data-y="5"></div>
+            <div class="box" data-x="0" data-y="6"></div>
+            <div class="box" data-x="0" data-y="7"></div>
+        </div>
+        <div class="column">
+            <div class="box" data-x="1" data-y="0">
+                <div id="redsemirichochet" draggable="true"></div>
+            </div>
+            <div class="box" data-x="1" data-y="1"></div>
+            <div class="box" data-x="1" data-y="2"></div>
+            <div class="box" data-x="1" data-y="3"></div>
+            <div class="box" data-x="1" data-y="4"></div>
+            <div class="box" data-x="1" data-y="5"></div>
+            <div class="box" data-x="1" data-y="6"></div>
+            <div class="box" data-x="1" data-y="7">
+                <div id="bluesemirichochet" draggable="true"></div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box" data-x="2" data-y="0">
+                <div id="redricochet" draggable="true"></div>
+            </div>
+            <div class="box" data-x="2" data-y="1"></div>
+            <div class="box" data-x="2" data-y="2"></div>
+            <div class="box" data-x="2" data-y="3"></div>
+            <div class="box" data-x="2" data-y="4"></div>
+            <div class="box" data-x="2" data-y="5"></div>
+            <div class="box" data-x="2" data-y="6"></div>
+            <div class="box" data-x="2" data-y="7">
+                <div id="bluericochet" draggable="true"></div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box" data-x="3" data-y="0">
+                <div id="redcanon" draggable="true">CANON
+                    <div id="bullet" class="bulletred"></div>
+                </div>
+            </div>
+            <div class="box" data-x="3" data-y="1"></div>
+            <div class="box" data-x="3" data-y="2"></div>
+            <div class="box" data-x="3" data-y="3"></div>
+            <div class="box" data-x="3" data-y="4"></div>
+            <div class="box" data-x="3" data-y="5"></div>
+            <div class="box" data-x="3" data-y="6"></div>
+            <div class="box" data-x="3" data-y="7">
+                <div id="bluecanon" draggable="true">CANON
+                    <div id="bullet" class="bulletblue"></div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box" data-x="4" data-y="0">
+                <div id="redtank" draggable="true">TANK</div>
+            </div>
+            <div class="box" data-x="4" data-y="1"></div>
+            <div class="box" data-x="4" data-y="2"></div>
+            <div class="box" data-x="4" data-y="3"></div>
+            <div class="box" data-x="4" data-y="4"></div>
+            <div class="box" data-x="4" data-y="5"></div>
+            <div class="box" data-x="4" data-y="6"></div>
+            <div class="box" data-x="4" data-y="7">
+                <div id="bluetank" draggable="true">TANK</div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box" data-x="5" data-y="0">
+                <div id="redtitan" draggable="true">TITAN</div>
+            </div>
+            <div class="box" data-x="5" data-y="1"></div>
+            <div class="box" data-x="5" data-y="2"></div>
+            <div class="box" data-x="5" data-y="3"></div>
+            <div class="box" data-x="5" data-y="4"></div>
+            <div class="box" data-x="5" data-y="5"></div>
+            <div class="box" data-x="5" data-y="6"></div>
+            <div class="box" data-x="5" data-y="7">
+                <div id="bluetitan" draggable="true">TITAN</div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box" data-x="6" data-y="0"></div>
+            <div class="box" data-x="6" data-y="1"></div>
+            <div class="box" data-x="6" data-y="2"></div>
+            <div class="box" data-x="6" data-y="3"></div>
+            <div class="box" data-x="6" data-y="4"></div>
+            <div class="box" data-x="6" data-y="5"></div>
+            <div class="box" data-x="6" data-y="6"></div>
+            <div class="box" data-x="6" data-y="7"></div>
+        </div>
+        <div class="column">
+            <div class="box" data-x="7" data-y="0"></div>
+            <div class="box" data-x="7" data-y="1"></div>
+            <div class="box" data-x="7" data-y="2"></div>
+            <div class="box" data-x="7" data-y="3"></div>
+            <div class="box" data-x="7" data-y="4"></div>
+            <div class="box" data-x="7" data-y="5"></div>
+            <div class="box" data-x="7" data-y="6"></div>
+            <div class="box" data-x="7" data-y="7"></div>
+        </div>
+    </div>
+    <script>
+        
+document.querySelectorAll('.box').forEach(box => {
+    box.addEventListener('click', function () {
+        document.querySelectorAll('.box').forEach(b => b.classList.remove('legalsquare'));
+
+        let x = parseInt(box.getAttribute('data-x'));
+        let y = parseInt(box.getAttribute('data-y'));
+        let piece = box.firstElementChild;
+
+        if (piece) {
+            let pieceId = piece.id;
+            highlightLegalMoves(x, y, pieceId);
+        }
+    });
+});
+
+function highlightLegalMoves(x, y, pieceId) {
+    const directions = [
+        { dx: 1, dy: 0 },  
+        { dx: -1, dy: 0 }, 
+        { dx: 0, dy: 1 },  
+        { dx: 0, dy: -1 }, 
+        { dx: 1, dy: 1 },  
+        { dx: -1, dy: -1 }, 
+        { dx: 1, dy: -1 }, 
+        { dx: -1, dy: 1 }  
+    ];
+
+    if (pieceId.includes('canon')) {
+        directions.slice(0, 2).forEach(direction => {
+            let newX = x + direction.dx;
+            let newY = y + direction.dy;
+
+            if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+                let newBox = document.querySelector(`.box[data-x="${newX}"][data-y="${newY}"]`);
+                if (!newBox.firstElementChild) {
+                    newBox.classList.add('legalsquare');
+                }
+            }
+        });
+    } else {
+        directions.forEach(direction => {
+            let newX = x + direction.dx;
+            let newY = y + direction.dy;
+
+            if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+                let newBox = document.querySelector(`.box[data-x="${newX}"][data-y="${newY}"]`);
+                if (!newBox.firstElementChild) {
+                    newBox.classList.add('legalsquare');
+                }
+            }
+        });
+    }
+}
+
+const boxes = document.querySelectorAll('.box');
+const highlightedBoxes = document.querySelectorAll('.legalsquare');
+
+
+boxes.forEach(box => {
+    box.setAttribute('draggable', 'true');
+    box.classList.add('drag-item');
+
+    box.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('text/plain', box.id);
+    });
+});
+
+
+let draggedPiece = null;
+
+document.querySelectorAll('.box div').forEach(piece => {
+    piece.addEventListener('dragstart', function (e) {
+        draggedPiece = e.target;
+    });
+});
+
+document.querySelectorAll('.box').forEach(box => {
+    box.addEventListener('dragover', function (e) {
+        e.preventDefault();
+    });
+
+    box.addEventListener('drop', function (e) {
+        e.preventDefault();
+        if (!box.firstElementChild && draggedPiece) {
+            box.appendChild(draggedPiece);
+            document.querySelectorAll('.box').forEach(b => b.classList.remove('legalsquare'));
+            
+        }
+    });
+});
+
+function moveBulletred() {
+    const bullet = document.getElementById('bullet');
+    let position = 250;         
+    const speed = 5;
+    const stopposition= 850;
+
+    bullet.style.top = '0px';
+    bullet.style.display = 'block';
+
+    function updatePosition() {
+        position += speed;
+        bullet.style.top = position + 'px';
+
+        if (position > stopposition) {
+            bullet.style.display = 'none';
+        } else {
+            requestAnimationFrame(updatePosition);
+        }
+    }
+
+    requestAnimationFrame(updatePosition);
+}
+function moveBulletblue() {
+    const bullet = document.getElementById('bullet');
+    let position = 0; 
+    const speed = 5;  
+    const stopposition = 250; 
+
+    bullet.style.bottom = '0px';
+    bullet.style.display = 'block';
+
+    function updatePosition() {
+        position += speed;
+        bullet.style.bottom = position + 'px'; 
+
+        if (position > stopposition) {
+            bullet.style.display = 'none';
+        } else {
+            requestAnimationFrame(updatePosition);
+        }
+    }
+
+    requestAnimationFrame(updatePosition);
+}
+
+document.querySelector('#redtitan').addEventListener("drag", moveBulletred);
+document.querySelector('#redtank').addEventListener("drag", moveBulletred);
+
+
+
+
+
+let timerInterval;
+
+document.getElementById('playbutton').addEventListener('click', function() {
+    const timerElement = document.getElementById('timer');
+    let hours = 0;
+    let minutes = 0;
+    let seconds = 0;
+
+    function updateTimer() {
+        seconds++;
+        if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+        }
+
+        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        timerElement.textContent = formattedTime;
+    }
+
+    timerInterval = setInterval(updateTimer, 1000);
+
+    this.textContent = 'PAUSE';
+    this.removeEventListener('click', arguments.callee);
+
+    this.addEventListener('click', function() {
+        clearInterval(timerInterval);
+        this.textContent = 'PLAY';
+        this.removeEventListener('click', arguments.callee);
+        this.addEventListener('click', startTimer);
+    });
+});
+
+function startTimer() {
+    timerInterval = setInterval(updateTimer, 1000);
+    document.getElementById('playbutton').textContent = 'PAUSE';
+    document.getElementById('playbutton').removeEventListener('click', startTimer);
+}
+
+document.getElementById('quitbutton').addEventListener('click', function() {
+    document.getElementById('gameover').style.display = 'block'; 
+});
+
+
+    </script>
+        
+</body>
+</html>
